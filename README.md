@@ -145,6 +145,9 @@ Este projeto é a **Parte 2** do Checkpoint 5 de Java Advanced.
 
 ## 📸 Prints de Tela
 
+* **Spring Initializr**
+![springinitializr.png](src/main/resources/static/prints/springinitializr.png)
+
 * **Página Inicial (Landing Page)**
 ![index.png](src/main/resources/static/prints/index.png)
 
