@@ -56,6 +56,9 @@ public class AuthController {
         userRepository.save(appUser);
         System.out.println("=== USUÁRIO CRIADO COM SUCESSO ===");
         ra.addFlashAttribute("success", "Usuário criado com sucesso. Faça login.");
+
         return "redirect:/login";
+
     }
+
 }

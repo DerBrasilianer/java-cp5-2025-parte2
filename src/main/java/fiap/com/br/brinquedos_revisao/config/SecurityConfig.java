@@ -17,7 +17,6 @@ public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
 
-    // injete seu UserDetailsService (ou service que implementa UserDetailsService)
     public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
@@ -27,13 +26,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // registra o DaoAuthenticationProvider com o UserDetailsService e o PasswordEncoder
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
+
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(this.userDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
+
         return provider;
+
     }
 
     @Bean
@@ -65,4 +66,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 }

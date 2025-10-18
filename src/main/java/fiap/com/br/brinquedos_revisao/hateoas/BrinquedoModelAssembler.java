@@ -13,6 +13,7 @@ public class BrinquedoModelAssembler implements RepresentationModelAssembler<Bri
 
     @Override
     public EntityModel<Brinquedo> toModel(Brinquedo entity) {
+
         return EntityModel.of(
                 entity,
                 linkTo(methodOn(BrinquedoController.class).buscarPorId(entity.getId())).withSelfRel(),
@@ -21,5 +22,7 @@ public class BrinquedoModelAssembler implements RepresentationModelAssembler<Bri
                 linkTo(methodOn(BrinquedoController.class).atualizarParcial(entity.getId(), entity)).withRel("patch"),
                 linkTo(methodOn(BrinquedoController.class).deletar(entity.getId())).withRel("delete")
         );
+
     }
+
 }

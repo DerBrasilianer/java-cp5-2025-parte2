@@ -18,16 +18,20 @@ public class ApiExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ProblemDetail handleNotFound(ResourceNotFoundException ex, HttpServletRequest req) {
+
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
         pd.setTitle("Recurso não encontrado");
         pd.setProperty("timestamp", OffsetDateTime.now());
         pd.setProperty("path", req.getRequestURI());
+
         return pd;
+
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ProblemDetail handleValidation(MethodArgumentNotValidException ex, HttpServletRequest req) {
+
         ProblemDetail pd = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Falha de validação");
         pd.setTitle("Dados inválidos");
 
@@ -41,15 +45,20 @@ public class ApiExceptionHandler {
         pd.setProperty("errors", errors);
         pd.setProperty("timestamp", OffsetDateTime.now());
         pd.setProperty("path", req.getRequestURI());
+
         return pd;
+
     }
 
     @ExceptionHandler(ErrorResponseException.class)
     public ProblemDetail handleErrorResponse(ErrorResponseException ex, HttpServletRequest req) {
+
         ProblemDetail pd = ex.getBody();
         pd.setProperty("timestamp", OffsetDateTime.now());
         pd.setProperty("path", req.getRequestURI());
+
         return pd;
+
     }
 
 }

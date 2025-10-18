@@ -20,7 +20,9 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+
         if (userRepository.findByUsername("user").isEmpty()) {
+
             userRepository.save(AppUser.builder()
                     .username("user")
                     .password(passwordEncoder.encode("userpass"))
@@ -31,9 +33,11 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("Usuário: user");
             System.out.println("Senha: userpass");
             System.out.println("Role: USER");
+
         }
 
         if (userRepository.findByUsername("admin").isEmpty()) {
+
             userRepository.save(AppUser.builder()
                     .username("admin")
                     .password(passwordEncoder.encode("adminpass"))
@@ -44,8 +48,11 @@ public class DataInitializer implements CommandLineRunner {
             System.out.println("Usuário: admin");
             System.out.println("Senha: adminpass");
             System.out.println("Role: ADMIN");
+
         }
 
         System.out.println("=== USUÁRIOS DE TESTE PRONTOS ===");
+
     }
+
 }

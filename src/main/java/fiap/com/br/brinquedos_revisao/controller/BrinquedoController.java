@@ -44,14 +44,18 @@ public class BrinquedoController {
 
     @PostMapping
     public ResponseEntity<EntityModel<Brinquedo>> criar(@RequestBody @Valid Brinquedo brinquedo) {
+
         Brinquedo salvo = brinquedoRepository.save(brinquedo);
         EntityModel<Brinquedo> model = assembler.toModel(salvo);
         URI location = linkTo(methodOn(BrinquedoController.class).buscarPorId(salvo.getId())).toUri();
+
         return ResponseEntity.created(location).body(model);
+
     }
 
     @PutMapping("/{id}")
     public EntityModel<Brinquedo> atualizar(@PathVariable Long id, @RequestBody @Valid Brinquedo brinquedo) {
+
         Brinquedo existente = brinquedoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Brinquedo não encontrado com ID: " + id));
 
@@ -59,11 +63,14 @@ public class BrinquedoController {
         existente.setPreco(brinquedo.getPreco());
 
         Brinquedo atualizado = brinquedoRepository.save(existente);
+
         return assembler.toModel(atualizado);
+
     }
 
     @PatchMapping("/{id}")
     public EntityModel<Brinquedo> atualizarParcial(@PathVariable Long id, @RequestBody Brinquedo patch) {
+
         Brinquedo existente = brinquedoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Brinquedo não encontrado com ID: " + id));
 
@@ -71,14 +78,20 @@ public class BrinquedoController {
         if (patch.getPreco() != null) existente.setPreco(patch.getPreco());
 
         Brinquedo atualizado = brinquedoRepository.save(existente);
+
         return assembler.toModel(atualizado);
+
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
+
         Brinquedo brinquedo = brinquedoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Brinquedo não encontrado com ID: " + id));
         brinquedoRepository.delete(brinquedo);
+
         return ResponseEntity.noContent().build();
+
     }
+
 }

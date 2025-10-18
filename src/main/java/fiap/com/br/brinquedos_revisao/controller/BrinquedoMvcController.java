@@ -23,51 +23,68 @@ public class BrinquedoMvcController {
 
     @GetMapping("/web")
     public String listarWeb(Model model) {
+
         List<Brinquedo> lista = brinquedoRepository.findAll();
         model.addAttribute("brinquedos", lista);
+
         return "brinquedos/list";
+
     }
 
     @GetMapping("/web/new")
     public String novoForm(Model model) {
+
         model.addAttribute("brinquedo", new Brinquedo());
         model.addAttribute("actionUrl", "/brinquedos/web");
         model.addAttribute("method", "post");
+
         return "brinquedos/form";
+
     }
 
     @PostMapping("/web")
     public String criarWeb(@Valid @ModelAttribute Brinquedo brinquedo, BindingResult br, RedirectAttributes ra, Model model) {
+
         if (br.hasErrors()) {
             model.addAttribute("actionUrl", "/brinquedos/web");
             return "brinquedos/form";
         }
+
         brinquedoRepository.save(brinquedo);
         ra.addFlashAttribute("success", "Brinquedo criado com sucesso");
+
         return "redirect:/brinquedos/web";
+
     }
 
     @GetMapping("/web/{id}")
     public String verDetalhes(@PathVariable Long id, Model model) {
+
         Brinquedo b = brinquedoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Brinquedo não encontrado com ID: " + id));
         model.addAttribute("brinquedo", b);
+
         return "brinquedos/details";
+
     }
 
     @GetMapping("/web/{id}/edit")
     @PreAuthorize("hasRole('ADMIN')")
     public String editarForm(@PathVariable Long id, Model model) {
+
         Brinquedo b = brinquedoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Brinquedo não encontrado com ID: " + id));
         model.addAttribute("brinquedo", b);
         model.addAttribute("actionUrl", "/brinquedos/" + id + "/update");
+
         return "brinquedos/form";
+
     }
 
     @PostMapping("/{id}/update")
     @PreAuthorize("hasRole('ADMIN')")
     public String atualizarWeb(@PathVariable Long id, @Valid @ModelAttribute Brinquedo brinquedo, BindingResult br, RedirectAttributes ra, Model model) {
+
         if (br.hasErrors()) {
             model.addAttribute("actionUrl", "/brinquedos/" + id + "/update");
             return "brinquedos/form";
@@ -81,16 +98,22 @@ public class BrinquedoMvcController {
 
         brinquedoRepository.save(existente);
         ra.addFlashAttribute("success", "Brinquedo atualizado");
+
         return "redirect:/brinquedos/web";
+
     }
 
     @PostMapping("/{id}/delete")
     @PreAuthorize("hasRole('ADMIN')")
     public String deletarWeb(@PathVariable Long id, RedirectAttributes ra) {
+
         Brinquedo b = brinquedoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Brinquedo não encontrado com ID: " + id));
         brinquedoRepository.delete(b);
         ra.addFlashAttribute("success", "Brinquedo deletado");
+
         return "redirect:/brinquedos/web";
+
     }
+
 }
