@@ -31,8 +31,15 @@
                 <td>
                     <div class="table-actions">
                         <a th:href="@{/brinquedos/web/{id}(id=${b.id})}" class="btn-view">Ver</a>
-                        <a th:href="@{/brinquedos/web/{id}/edit(id=${b.id})}" class="btn-edit">Editar</a>
-                        <form th:action="@{/brinquedos/{id}/delete(id=${b.id})}" method="post" class="inline-form">
+                        <!-- Apenas ADMIN pode editar -->
+                        <a th:href="@{/brinquedos/web/{id}/edit(id=${b.id})}"
+                           class="btn-edit"
+                           th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Editar</a>
+                        <!-- Apenas ADMIN pode excluir -->
+                        <form th:action="@{/brinquedos/{id}/delete(id=${b.id})}"
+                              method="post"
+                              class="inline-form"
+                              th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                             <button type="submit" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir este brinquedo?')">Excluir</button>
                         </form>
                     </div>

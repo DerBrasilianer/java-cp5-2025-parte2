@@ -472,6 +472,23 @@ footer {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* === Form Select === */
+.form-select {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background-color: #f9fafc;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.form-select:focus {
+    outline: none;
+    border-color: #005bbb;
+    background-color: #ffffff;
+}
+
 /* === Responsive === */
 @media (max-width: 768px) {
     .navbar {

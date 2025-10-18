@@ -24,7 +24,10 @@
     </div>
 
     <div class="details-actions">
-        <a th:href="@{/brinquedos/web/{id}/edit(id=${brinquedo.id})}" class="btn-edit">Editar Brinquedo</a>
+        <!-- Apenas ADMIN pode editar -->
+        <a th:href="@{/brinquedos/web/{id}/edit(id=${brinquedo.id})}"
+           class="btn-edit"
+           th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Editar Brinquedo</a>
         <a th:href="@{/brinquedos/web}" class="btn-secondary">Voltar para Lista</a>
     </div>
 </div>

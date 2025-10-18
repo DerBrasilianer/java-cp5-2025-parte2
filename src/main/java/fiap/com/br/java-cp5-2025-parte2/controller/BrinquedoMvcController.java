@@ -5,6 +5,7 @@ import fiap.com.br.brinquedos_revisao.exception.ResourceNotFoundException;
 import fiap.com.br.brinquedos_revisao.repository.BrinquedoRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,6 +56,7 @@ public class BrinquedoMvcController {
     }
 
     @GetMapping("/web/{id}/edit")
+    @PreAuthorize("hasRole('ADMIN')")
     public String editarForm(@PathVariable Long id, Model model) {
         Brinquedo b = brinquedoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Brinquedo não encontrado com ID: " + id));
@@ -64,6 +66,7 @@ public class BrinquedoMvcController {
     }
 
     @PostMapping("/{id}/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public String atualizarWeb(@PathVariable Long id, @Valid @ModelAttribute Brinquedo brinquedo, BindingResult br, RedirectAttributes ra, Model model) {
         if (br.hasErrors()) {
             model.addAttribute("actionUrl", "/brinquedos/" + id + "/update");
@@ -82,6 +85,7 @@ public class BrinquedoMvcController {
     }
 
     @PostMapping("/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deletarWeb(@PathVariable Long id, RedirectAttributes ra) {
         Brinquedo b = brinquedoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Brinquedo não encontrado com ID: " + id));
