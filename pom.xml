@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>fiap.com.br</groupId>
-	<artifactId>brinquedos-revisao</artifactId>
+	<artifactId>java-cp5-2025-parte2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>
