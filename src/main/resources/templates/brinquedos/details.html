@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head th:replace="fragments/layout :: mainHead('Detalhes do Brinquedo')"></head>
+<body>
+
+<div th:replace="fragments/layout :: mainHeader"></div>
+
+<main class="container py-5">
+    <div class="card-surface">
+        <h2>Detalhes</h2>
+        <dl class="row dl-row">
+            <dt class="col-sm-3">ID</dt><dd class="col-sm-9" th:text="${brinquedo.id}"></dd>
+            <dt class="col-sm-3">Nome</dt><dd class="col-sm-9" th:text="${brinquedo.nome}"></dd>
+            <dt class="col-sm-3">Preço</dt><dd class="col-sm-9" th:text="${#numbers.formatDecimal(brinquedo.preco, 1, 2)}"></dd>
+        </dl>
+
+        <a th:href="@{/brinquedos/web/{id}/edit(id=${brinquedo.id})}" class="btn btn-brand me-2">Editar</a>
+        <a th:href="@{/brinquedos/web}" class="btn btn-outline-secondary">Voltar</a>
+    </div>
+</main>
+
+<div th:replace="fragments/layout :: mainFooter"></div>
+</body>
+</html>
