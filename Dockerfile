@@ -19,8 +19,8 @@ FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
 
-# Copia o JAR do estágio de build
-COPY --from=build /app/target/brinquedos-revisao-0.0.1-SNAPSHOT.jar app.jar
+# Copia o JAR do estágio de build (nome CORRETO)
+COPY --from=build /app/target/java-cp5-2025-parte2-0.0.1-SNAPSHOT.jar app.jar
 
 # Expõe a porta 8081
 EXPOSE 8081
