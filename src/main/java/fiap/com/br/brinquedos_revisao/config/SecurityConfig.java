@@ -39,24 +39,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // para desenvolvimento local; remova/ajuste em produção
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/index", "/home", "/login", "/signup", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/brinquedos/**").authenticated()
-                        .anyRequest().authenticated()
+                        .anyRequest().authenticated() // VOLTE PARA authenticated()
                 )
-                // registra o provider definido acima
                 .authenticationProvider(authenticationProvider())
                 .formLogin(form -> form
-                        .loginPage("/login")               // GET /login -> controller deve retornar login.html
-                        .loginProcessingUrl("/login")      // POST /login será processado pelo Spring Security
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
                         .failureUrl("/login?error=true")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        // use logoutUrl sem AntPathRequestMatcher
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .invalidateHttpSession(true)

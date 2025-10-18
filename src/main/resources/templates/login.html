@@ -14,16 +14,34 @@
 
         <div class="form-group">
             <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required />
+            <div class="password-container">
+                <input type="password" id="password" name="password" required />
+                <button type="button" class="toggle-password" onclick="togglePassword()">|</button>
+            </div>
         </div>
 
-        <button type="submit">Entrar</button>
+        <button type="submit" class="btn-primary">Entrar</button>
     </form>
 
-    <p>Não possui conta? <a th:href="@{/signup}">Cadastre-se</a></p>
+    <p class="text-center">Não possui conta? <a th:href="@{/signup}" class="link">Cadastre-se</a></p>
 
-    <p th:if="${param.error}" class="error-msg">Usuário ou senha inválidos</p>
-    <p th:if="${param.logout}" class="info-msg">Logout realizado com sucesso</p>
+    <p th:if="${param.error}" class="alert alert-error">Usuário ou senha inválidos</p>
+    <p th:if="${param.logout}" class="alert alert-success">Logout realizado com sucesso</p>
 </div>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const toggleButton = document.querySelector('.toggle-password');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleButton.textContent = '/';
+        } else {
+            passwordInput.type = 'password';
+            toggleButton.textContent = '|';
+        }
+    }
+</script>
 </body>
 </html>

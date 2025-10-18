@@ -29,24 +29,42 @@ public class AuthController {
 
     @GetMapping("/signup")
     public String signupForm(Model model) {
+        System.out.println("=== GET /signup ACESSADO ===");
         model.addAttribute("appUser", new AppUser());
         return "signup";
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid AppUser appUser, BindingResult br, RedirectAttributes ra) {
+    public String signup(@ModelAttribute AppUser appUser, BindingResult br, RedirectAttributes ra) {
+        System.out.println("=== POST /signup RECEBIDO ===");
+        System.out.println("Username: " + appUser.getUsername());
+
+        // Validações manuais
+        if (appUser.getUsername() == null || appUser.getUsername().trim().isEmpty()) {
+            br.rejectValue("username", "NotEmpty", "Usuário é obrigatório");
+        }
+        if (appUser.getPassword() == null || appUser.getPassword().trim().isEmpty()) {
+            br.rejectValue("password", "NotEmpty", "Senha é obrigatória");
+        }
+
         if (br.hasErrors()) {
+            System.out.println("=== ERROS DE VALIDAÇÃO ===");
             return "signup";
         }
+
         if (userRepository.existsByUsername(appUser.getUsername())) {
+            System.out.println("=== USUÁRIO JÁ EXISTE ===");
             ra.addFlashAttribute("error", "Usuário já existe");
             return "redirect:/signup";
         }
+
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         appUser.setRole(Role.USER);
         appUser.setEnabled(true);
         userRepository.save(appUser);
+        System.out.println("=== USUÁRIO CRIADO COM SUCESSO ===");
         ra.addFlashAttribute("success", "Usuário criado com sucesso. Faça login.");
         return "redirect:/login";
     }
+
 }

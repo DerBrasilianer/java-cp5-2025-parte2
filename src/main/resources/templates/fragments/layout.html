@@ -12,7 +12,7 @@
 <header>
     <nav class="navbar">
         <div class="navbar-logo">
-            <a th:href="@{/}">🏀 Brinquedos Esportivos</a>
+            <a th:href="@{/}">Brinquedos Esportivos</a>
         </div>
         <ul class="navbar-menu">
             <li><a th:href="@{/}">Home</a></li>
@@ -22,7 +22,7 @@
             <li sec:authorize="!isAuthenticated()"><a th:href="@{/signup}">Sign Up</a></li>
 
             <!-- VISÍVEL SOMENTE PARA USUÁRIOS LOGADOS -->
-            <li sec:authorize="isAuthenticated()"><a th:href="@{/brinquedos}">Brinquedos</a></li>
+            <li sec:authorize="isAuthenticated()"><a th:href="@{/brinquedos/web}">Brinquedos</a></li>
             <li sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" method="post" style="display:inline;">
                     <button type="submit" class="logout-btn">Logout</button>
@@ -32,8 +32,8 @@
     </nav>
 </header>
 
-<main class="content" th:fragment="content">
-    <div th:insert="${content}"></div>
+<main class="main-content">
+    <div th:replace="${content}"></div>
 </main>
 
 <footer>
